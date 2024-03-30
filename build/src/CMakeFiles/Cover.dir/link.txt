@@ -1,2 +1,0 @@
-C:\mingw64\bin\ar.exe qc libCover.a CMakeFiles/Cover.dir/Cover.cpp.obj
-C:\mingw64\bin\ranlib.exe libCover.a

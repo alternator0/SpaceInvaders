@@ -1,2 +1,0 @@
-C:\mingw64\bin\ar.exe qc libLaser.a CMakeFiles/Laser.dir/Laser.cpp.obj
-C:\mingw64\bin\ranlib.exe libLaser.a

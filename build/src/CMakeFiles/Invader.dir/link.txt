@@ -1,2 +1,0 @@
-C:\mingw64\bin\ar.exe qc libInvader.a CMakeFiles/Invader.dir/Invader.cpp.obj
-C:\mingw64\bin\ranlib.exe libInvader.a

@@ -1,2 +1,0 @@
-C:\mingw64\bin\ar.exe qc libFleet.a CMakeFiles/Fleet.dir/Fleet.cpp.obj
-C:\mingw64\bin\ranlib.exe libFleet.a
