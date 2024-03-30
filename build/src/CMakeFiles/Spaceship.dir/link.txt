@@ -1,0 +1,2 @@
+C:\mingw64\bin\ar.exe qc libSpaceship.a CMakeFiles/Spaceship.dir/Spaceship.cpp.obj
+C:\mingw64\bin\ranlib.exe libSpaceship.a
