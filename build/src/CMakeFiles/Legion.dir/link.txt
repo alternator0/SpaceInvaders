@@ -1,2 +1,0 @@
-C:\mingw64\bin\ar.exe qc libLegion.a CMakeFiles/Legion.dir/Legion.cpp.obj
-C:\mingw64\bin\ranlib.exe libLegion.a
