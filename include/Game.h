@@ -16,16 +16,20 @@ class Game {
     int m_column{};
     int m_row{};
     int m_health{3};
+    bool m_run{true};
 
 public:
     Game() = default;
     ~Game();
+    void turnOn();
     void updateLasers();
     void deleteInactiveLasers();
     void deleteInactiveInvaders();
     void moveInvaders();
     void drawHealth();
     void update();
+    void gameOver();
+    bool isRunning(){return m_run;};
     void draw();
     void createInvaders();
 };

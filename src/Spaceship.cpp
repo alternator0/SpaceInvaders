@@ -31,7 +31,7 @@ void Spaceship::getHit(std::vector<Laser>& lasers, int& health) {
 }
 
 void Spaceship::moveLeft() {
-    if (m_position.x != 0)
+    if (m_position.x >GetScreenWidth()/50)
         m_position.x -= m_speed;
 }
 

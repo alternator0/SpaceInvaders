@@ -17,11 +17,15 @@ Shield::Shield(float a, float b, float width)
     }
 }
 
+
+
 void Shield::draw() {
     for (const auto& x : m_blocks) {
         x.draw();
     }
 }
+
+
 
 void Shield::update(Laser& laser) {
     for (auto it{m_blocks.begin()}; it < m_blocks.end();) {

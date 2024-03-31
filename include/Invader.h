@@ -28,6 +28,7 @@ public:
     AlienType getType(){return m_type;}
     void move(float x, float y);
     void draw();
+    void turnOff(){m_isActive = false;}
     void update(std::vector<Laser>& lasers, std::size_t size);
     static void unloadImages();
     Texture2D* getImages(){return m_images;}
