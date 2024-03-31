@@ -13,6 +13,8 @@ class Game {
     //Invader m_invader{100,100,Invader::alien3};
     Rectangle m_legion{};
     Cover<4,3.0f> m_cover{};
+    int m_column{};
+    int m_row{};
 
 public:
     Game() = default;
@@ -20,6 +22,7 @@ public:
     void updateLasers();
     void deleteInactiveLasers();
     void deleteInactiveInvaders();
+    void moveInvaders();
     void update();
     void draw();
     void createInvaders();

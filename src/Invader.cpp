@@ -24,8 +24,8 @@ Invader::Invader(float x, float y, AlienType type): m_position{x, y}, m_type{typ
     }
 }
 
-void Invader::shoot() {
-    if (Random::get(0, 1000) == 1) {
+void Invader::shoot(std::size_t size) {
+    if (Random::get(0, 20 * (static_cast<int>(size)/2)) == 1) {
         m_lasers.push_back(Laser{
             {m_position.x + (m_images[m_type].width / 2), m_position.y + m_images[m_type].height},
             6});
@@ -44,12 +44,17 @@ void Invader::getHit(std::vector<Laser>& lasers) {
     }
 }
 
+void Invader::move(float x, float y) {
+    m_position.x +=x;
+    m_position.y +=y;
+}
+
 void Invader::draw() {
     DrawTextureV(m_images[m_type], m_position, {WHITE});
 }
 
-void Invader::update(std::vector<Laser>& lasers) {
-    shoot();
+void Invader::update(std::vector<Laser>& lasers,std::size_t size) {
+    shoot(size);
     getHit(lasers);
 }
 

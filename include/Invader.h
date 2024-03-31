@@ -20,11 +20,15 @@ public:
 
     Invader(float x, float y, AlienType type);
     ~Invader();
-    void shoot();
+    void shoot(std::size_t size);
+    Vector2 getPosition()const {return m_position;};
     void getHit(std::vector<Laser>& lasers);
     bool isActive() const { return m_isActive; }
     std::vector<Laser>& lasers() { return m_lasers; }
+    AlienType getType(){return m_type;}
+    void move(float x, float y);
     void draw();
-    void update(std::vector<Laser>& lasers);
+    void update(std::vector<Laser>& lasers, std::size_t size);
     static void unloadImages();
+    Texture2D* getImages(){return m_images;}
 };

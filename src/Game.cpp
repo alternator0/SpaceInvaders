@@ -39,13 +39,17 @@ void Game::deleteInactiveInvaders() {
     }
 }
 
+
+
 void Game::update() {
     m_player.update();
     // m_invader.shoot();
     // m_invader.getHit(m_player.lasers());
+
+    moveInvaders();
     //// m_invader.update();
     for (Invader& invader : m_invaders) {
-        invader.update(m_player.lasers());
+        invader.update(m_player.lasers(), m_invaders.size());
     }
 
     updateLasers();
@@ -73,11 +77,11 @@ void Game::draw() {
 
 void Game::createInvaders() {
     float spaceBetweenY{static_cast<float>(GetScreenHeight()) / 10};
-    int row{11};
-    int column{5};
+    m_row = 11;
+    m_column = 5;
     Invader::AlienType type{};
-    for (int y{0}; y < column; ++y) {
-        for (int x{0}; x < row; ++x) {
+    for (int y{0}; y < m_column; ++y) {
+        for (int x{0}; x < m_row; ++x) {
             if (y == 0) {
                 type = Invader::alien3;
             } else if (y == 1 || y == 2) {
@@ -85,15 +89,29 @@ void Game::createInvaders() {
             } else {
                 type = Invader::alien1;
             }
-            float positionX{static_cast<float>(GetScreenWidth()) / (row + 1) *
+            float positionX{static_cast<float>(GetScreenWidth()) / (m_row + 1) *
                             (x + 1)};
             float positionY{spaceBetweenY * y + 50};
             m_invaders.push_back({positionX, positionY, type});
         }
     }
-    // for (auto& t: m_invaders){
-    //     std::cout << t.
-    // }
-    //    std::cout <<
+}
+
+void Game::moveInvaders() {
+    static float speed{1};
+    float y{0};
+    static Invader rightMostInvader{m_invaders.at(21)};
+    static float positionRight{rightMostInvader.getPosition().x + rightMostInvader.getImages()[rightMostInvader.getType()].width};
+    static float positionLeft{m_invaders.at(0).getPosition().x};
+    if (positionRight > GetScreenWidth()|| positionLeft < 0){
+        speed = -speed;
+        y = 2;
+    }
+    positionRight +=speed;
+    positionLeft += speed;
+
+    for (Invader& invader: m_invaders){
+        invader.move(speed,y);
+    }
 }
 //
