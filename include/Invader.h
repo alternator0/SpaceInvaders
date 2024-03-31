@@ -14,12 +14,13 @@ private:
     std::vector<Laser> m_lasers{};
     bool m_isActive{true};
     AlienType m_type{};
+    Vector2 m_position{};
 
 public:
-Vector2 m_position{};
+
     Invader(float x, float y, AlienType type);
     ~Invader();
-    //void shoot();
+    void shoot();
     //void getHit(std::vector<Laser>& lasers);
     bool isActive() const { return m_isActive; }
     std::vector<Laser>& lasers() { return m_lasers; }

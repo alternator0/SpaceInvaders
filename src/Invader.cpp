@@ -24,13 +24,13 @@ Invader::Invader(float x, float y, AlienType type): m_position{x, y}, m_type{typ
     }
 }
 
-//void Invader::shoot() {
-//    if (Random::get(0, 60) == 1) {
-//        m_lasers.push_back(Laser{
-//            {m_position.x + (m_images[].width / 2), m_position.y + m_image.height},
-//            6});
-//    }
-//}
+void Invader::shoot() {
+    if (Random::get(0, 60) == 1) {
+        m_lasers.push_back(Laser{
+            {m_position.x + (m_images[m_type].width / 2), m_position.y + m_images[m_type].height},
+            6});
+    }
+}
 
 //void Invader::getHit(std::vector<Laser>& lasers) {
 //    for (Laser& laser : lasers) {
@@ -49,7 +49,7 @@ void Invader::draw() {
 }
 
 void Invader::update(std::vector<Laser>& lasers) {
-    //shoot();
+    shoot();
     //getHit(lasers);
 }
 

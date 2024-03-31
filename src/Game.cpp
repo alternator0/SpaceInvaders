@@ -4,8 +4,8 @@
 //  #include "Invader.h"
 #include <cassert>
 #include <iostream>
-#include "Laser.h"
 #include "Invader.h"
+#include "Laser.h"
 
 Game::~Game() {
     Invader::unloadImages();
@@ -15,9 +15,11 @@ void Game::updateLasers() {
     for (Laser& laser : m_player.lasers()) {
         laser.update();
     }
-    // for (Laser& laser : m_invader.lasers()) {
-    //     laser.update();
-    // }
+    for (Invader& invader : m_invaders) {
+        for (Laser& laser : invader.lasers()) {
+            laser.update();
+        }
+    }
 }
 
 void Game::deleteInactiveLasers() {
@@ -33,6 +35,9 @@ void Game::update() {
     // m_invader.shoot();
     // m_invader.getHit(m_player.lasers());
     //// m_invader.update();
+    for (Invader& invader : m_invaders) {
+        invader.update(m_player.lasers());
+    }
 
     updateLasers();
     deleteInactiveLasers();
@@ -54,32 +59,33 @@ void Game::draw() {
     //     }
     m_cover.draw();
 
-    //m_invader.draw();
-    for (Invader& invader : m_invaders)
-        invader.draw();
     // m_invader.draw();
-    // for (Laser& laser : m_invader.lasers())
+    for (Invader& invader : m_invaders) {
+        invader.draw();
+        for (Laser& laser : invader.lasers())
+            laser.draw();
+    }
     //     laser.draw();
     //  m_fleet.draw();
 }
 
 void Game::createInvaders() {
-    float height{static_cast<float>(40)};
+    float spaceBetweenY{static_cast<float>(GetScreenHeight()) / 10};
     int row{11};
     int column{5};
     Invader::AlienType type{};
     for (int y{0}; y < column; ++y) {
         for (int x{0}; x < row; ++x) {
-                if (y == 0) {
-                    type = Invader::alien3;
-                } else if (y == 1 || y == 2) {
-                    type = Invader::alien2;
-                } else {
-                    type = Invader::alien1;
-                }
-            float positionX{static_cast<float>(GetScreenWidth() / (row + 1)) *
+            if (y == 0) {
+                type = Invader::alien3;
+            } else if (y == 1 || y == 2) {
+                type = Invader::alien2;
+            } else {
+                type = Invader::alien1;
+            }
+            float positionX{static_cast<float>(GetScreenWidth()) / (row + 1) *
                             (x + 1)};
-            float positionY{height * (y + 1) + 50};
+            float positionY{spaceBetweenY * y + 50};
             m_invaders.push_back({positionX, positionY, type});
         }
     }
