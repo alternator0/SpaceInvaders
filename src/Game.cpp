@@ -26,9 +26,18 @@ void Game::deleteInactiveLasers() {
     for (auto it{m_player.lasers().begin()}; it < m_player.lasers().end();) {
         !it->isActive() ? m_player.lasers().erase(it) : ++it;
     }
+
+    for (Invader& invader : m_invaders)
+        for (auto it{invader.lasers().begin()}; it < invader.lasers().end();) {
+            !it->isActive() ? invader.lasers().erase(it) : ++it;
+        }
 }
 
-void Game::deleteInactiveInvaders() {}
+void Game::deleteInactiveInvaders() {
+    for (auto it{m_invaders.begin()}; it < m_invaders.end();) {
+        !it->isActive() ? m_invaders.erase(it) : ++it;
+    }
+}
 
 void Game::update() {
     m_player.update();
@@ -41,11 +50,9 @@ void Game::update() {
 
     updateLasers();
     deleteInactiveLasers();
-    // deleteInactiveInvaders();
-    //  m_fleet.update(m_player.lasers());
-    m_cover.update(m_player.lasers());
-    // for (auto& x : m_fleet.invaders())
-    //     m_cover.update(x.lasers());
+    deleteInactiveInvaders();
+
+    m_cover.update(m_player.lasers(), m_invaders);
 }
 
 void Game::draw() {
@@ -53,10 +60,7 @@ void Game::draw() {
     for (const Laser& laser : m_player.lasers()) {
         laser.draw();
     }
-    // for (Invader& invader : m_fleet.invaders())
-    //     for (const Laser& laser : invader.lasers()) {
-    //         laser.draw();
-    //     }
+
     m_cover.draw();
 
     // m_invader.draw();
@@ -65,8 +69,6 @@ void Game::draw() {
         for (Laser& laser : invader.lasers())
             laser.draw();
     }
-    //     laser.draw();
-    //  m_fleet.draw();
 }
 
 void Game::createInvaders() {
