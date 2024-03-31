@@ -62,14 +62,6 @@ Invader::~Invader() {
     // UnloadTexture(m_image);
 }
 
-//void Invader::setImage(Texture2D&& x) {
-//    m_image = x;
-//}
-
-//void Invader::setImage(std::string_view x) {
-//    m_image = LoadTexture("../assets/alien_1.png");
-//}
-
  void Invader::unloadImages(){
     for (int i{0}; i < 3; ++i)
     UnloadTexture(m_images[i]);

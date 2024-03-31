@@ -39,8 +39,6 @@ void Game::deleteInactiveInvaders() {
     }
 }
 
-
-
 void Game::update() {
     m_player.update();
     // m_invader.shoot();
@@ -50,6 +48,7 @@ void Game::update() {
     //// m_invader.update();
     for (Invader& invader : m_invaders) {
         invader.update(m_player.lasers(), m_invaders.size());
+        m_player.getHit(invader.lasers(), m_health);
     }
 
     updateLasers();
@@ -73,11 +72,12 @@ void Game::draw() {
         for (Laser& laser : invader.lasers())
             laser.draw();
     }
+    drawHealth();
 }
 
 void Game::createInvaders() {
     float spaceBetweenY{static_cast<float>(GetScreenHeight()) / 10};
-    m_row = 11;
+    m_row    = 11;
     m_column = 5;
     Invader::AlienType type{};
     for (int y{0}; y < m_column; ++y) {
@@ -101,17 +101,28 @@ void Game::moveInvaders() {
     static float speed{1};
     float y{0};
     static Invader rightMostInvader{m_invaders.at(21)};
-    static float positionRight{rightMostInvader.getPosition().x + rightMostInvader.getImages()[rightMostInvader.getType()].width};
+    static float positionRight{
+        rightMostInvader.getPosition().x +
+        rightMostInvader.getImages()[rightMostInvader.getType()].width};
     static float positionLeft{m_invaders.at(0).getPosition().x};
-    if (positionRight > GetScreenWidth()|| positionLeft < 0){
+    if (positionRight > GetScreenWidth() || positionLeft < 0) {
         speed = -speed;
-        y = 2;
+        y     = 2;
     }
-    positionRight +=speed;
+    positionRight += speed;
     positionLeft += speed;
 
-    for (Invader& invader: m_invaders){
-        invader.move(speed,y);
+    for (Invader& invader : m_invaders) {
+        invader.move(speed, y);
     }
+}
+void Game::drawHealth() {
+    static Texture2D spaceshipTx{LoadTexture("../assets/spaceship.png")};
+    for (int i{0}; i < m_health; ++i)
+        DrawTextureV(
+            spaceshipTx,
+            Vector2{static_cast<float>(i) * spaceshipTx.width + 15,
+                    static_cast<float>(GetScreenHeight()) - spaceshipTx.height},
+            WHITE);
 }
 //

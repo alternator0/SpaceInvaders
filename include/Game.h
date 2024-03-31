@@ -15,6 +15,7 @@ class Game {
     Cover<4,3.0f> m_cover{};
     int m_column{};
     int m_row{};
+    int m_health{3};
 
 public:
     Game() = default;
@@ -23,6 +24,7 @@ public:
     void deleteInactiveLasers();
     void deleteInactiveInvaders();
     void moveInvaders();
+    void drawHealth();
     void update();
     void draw();
     void createInvaders();
