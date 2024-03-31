@@ -7,8 +7,11 @@ Laser::Laser(Vector2 position, int speed)
 void Laser::update() {
     if (m_isActive)
         m_laser.y += m_speed;
-    if (m_laser.y == 20 || m_laser.y == GetScreenHeight())
+    if (m_laser.y < (GetScreenHeight() / 50) ||
+        (m_laser.y + m_laser.height >
+         (GetScreenHeight() - (GetScreenHeight() / 50)))) {
         m_isActive = false;
+    }
 }
 
 void Laser::draw() const {

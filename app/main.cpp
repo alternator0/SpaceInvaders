@@ -16,13 +16,15 @@ int main() {
         if (game.isRunning()) {
             game.update();
         } else if (IsKeyPressed(KEY_ENTER)) {
-            game.deleteInactiveInvaders();
             game.turnOn();
         }
 
         BeginDrawing();
         if (game.isRunning()) {
             game.draw();
+            if (game.getInvaders().empty()) {
+                DrawText("Well Played", 200, 200, 70, {117, 122, 176, 255});
+            }
         } else {
             game.gameOver();
         }

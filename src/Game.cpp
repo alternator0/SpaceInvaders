@@ -13,12 +13,14 @@ Game::~Game() {
 
 void Game::turnOn() {
     m_run = true;
+    deleteInactiveInvaders();
     createInvaders();
     m_cover    = Cover<4, 3.0f>();
     m_health   = 3;
     m_wasReset = true;
     moveInvaders();
 }
+
 
 void Game::updateLasers() {
     for (Laser& laser : m_player.lasers()) {
@@ -86,7 +88,7 @@ void Game::draw() {
             static_cast<float>(GetScreenWidth() - (GetScreenWidth() / 50 * 2)),
             static_cast<float>(GetScreenHeight() -
                                (GetScreenHeight() / 50 * 2))},
-        0.15f, 0, 3, {243, 216, 63, 255});
+        0.15f, 0, 3, {117, 122, 176, 255});
     m_player.draw();
     for (const Laser& laser : m_player.lasers()) {
         laser.draw();

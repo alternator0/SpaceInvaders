@@ -22,10 +22,12 @@ public:
     Game() = default;
     ~Game();
     void turnOn();
+    std::vector<Invader>& getInvaders() {return m_invaders;}
     void updateLasers();
     void deleteInactiveLasers();
     void deleteInactiveInvaders();
     void moveInvaders();
+    void win();
     void drawHealth();
     void update();
     void gameOver();
