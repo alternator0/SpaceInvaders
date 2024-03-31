@@ -21,7 +21,7 @@ public:
     Invader(float x, float y, AlienType type);
     ~Invader();
     void shoot();
-    //void getHit(std::vector<Laser>& lasers);
+    void getHit(std::vector<Laser>& lasers);
     bool isActive() const { return m_isActive; }
     std::vector<Laser>& lasers() { return m_lasers; }
     void draw();

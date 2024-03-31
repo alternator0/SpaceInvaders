@@ -25,24 +25,24 @@ Invader::Invader(float x, float y, AlienType type): m_position{x, y}, m_type{typ
 }
 
 void Invader::shoot() {
-    if (Random::get(0, 60) == 1) {
+    if (Random::get(0, 1000) == 1) {
         m_lasers.push_back(Laser{
             {m_position.x + (m_images[m_type].width / 2), m_position.y + m_images[m_type].height},
             6});
     }
 }
 
-//void Invader::getHit(std::vector<Laser>& lasers) {
-//    for (Laser& laser : lasers) {
-//        if (CheckCollisionRecs(
-//                {m_position.x, m_position.y, static_cast<float>(m_image.width),
-//                 static_cast<float>(m_image.height)},
-//                laser.m_laser)) {
-//            m_isActive = false;
-//            laser.turnOff();
-//        }
-//    }
-//}
+void Invader::getHit(std::vector<Laser>& lasers) {
+    for (Laser& laser : lasers) {
+        if (CheckCollisionRecs(
+                {m_position.x, m_position.y, static_cast<float>(m_images[m_type].width),
+                 static_cast<float>(m_images[m_type].height)},
+                laser.m_laser)) {
+            m_isActive = false;
+            laser.turnOff();
+        }
+    }
+}
 
 void Invader::draw() {
     DrawTextureV(m_images[m_type], m_position, {WHITE});
@@ -50,7 +50,7 @@ void Invader::draw() {
 
 void Invader::update(std::vector<Laser>& lasers) {
     shoot();
-    //getHit(lasers);
+    getHit(lasers);
 }
 
 Invader::~Invader() {
