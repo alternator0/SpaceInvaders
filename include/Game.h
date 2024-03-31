@@ -17,7 +17,7 @@ class Game {
     int m_row{};
     int m_health{3};
     bool m_run{true};
-
+    bool m_wasReset{false};
 public:
     Game() = default;
     ~Game();

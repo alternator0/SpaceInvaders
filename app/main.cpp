@@ -15,19 +15,19 @@ int main() {
     while (!WindowShouldClose()) {
         if (game.isRunning()) {
             game.update();
-        } else if(IsKeyPressed(KEY_ENTER)){
-                game.turnOn();
-            }
-
-            BeginDrawing();
-            if (game.isRunning()) {
-                game.draw();
-            } else {
-                game.gameOver();
-                
-            }
-            ClearBackground({29, 29, 27, 255});
-            EndDrawing();
+        } else if (IsKeyPressed(KEY_ENTER)) {
+            game.deleteInactiveInvaders();
+            game.turnOn();
         }
-        return 0;
+
+        BeginDrawing();
+        if (game.isRunning()) {
+            game.draw();
+        } else {
+            game.gameOver();
+        }
+        ClearBackground({29, 29, 27, 255});
+        EndDrawing();
     }
+    return 0;
+}

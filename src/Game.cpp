@@ -7,17 +7,17 @@
 #include "Invader.h"
 #include "Laser.h"
 
-
 Game::~Game() {
     Invader::unloadImages();
 }
 
 void Game::turnOn() {
-    
     m_run = true;
     createInvaders();
-    m_cover = Cover<4,3.0f>();
-    m_health = 3;
+    m_cover    = Cover<4, 3.0f>();
+    m_health   = 3;
+    m_wasReset = true;
+    moveInvaders();
 }
 
 void Game::updateLasers() {
@@ -66,24 +66,26 @@ void Game::update() {
 
     m_cover.update(m_player.lasers(), m_invaders);
     if (m_health == 0) {
-        
         m_run = false;
-        for (Invader& invader: m_invaders)
-        invader.turnOff();
+        for (Invader& invader : m_invaders)
+            invader.turnOff();
     }
 }
 
 void Game::gameOver() {
-    DrawText("GAME OVER",100,100,40,RED);
-    DrawText("Do you want to continue?", 170,300,30,ORANGE);
-    DrawText("For yes press ENTER",170,350,20,GRAY);
+    DrawText("GAME OVER", 100, 100, 40, RED);
+    DrawText("Do you want to continue?", 170, 300, 30, ORANGE);
+    DrawText("For yes press ENTER", 170, 350, 20, GRAY);
 }
 
 void Game::draw() {
     DrawRectangleRoundedLines(
-        Rectangle{static_cast<float>(GetScreenWidth() / 50), static_cast<float>(GetScreenHeight() / 50),
-                  static_cast<float>(GetScreenWidth() - (GetScreenWidth() / 50 *2)),
-                  static_cast<float>(GetScreenHeight() - (GetScreenHeight() / 50*2))},
+        Rectangle{
+            static_cast<float>(GetScreenWidth() / 50),
+            static_cast<float>(GetScreenHeight() / 50),
+            static_cast<float>(GetScreenWidth() - (GetScreenWidth() / 50 * 2)),
+            static_cast<float>(GetScreenHeight() -
+                               (GetScreenHeight() / 50 * 2))},
         0.15f, 0, 3, {243, 216, 63, 255});
     m_player.draw();
     for (const Laser& laser : m_player.lasers()) {
@@ -131,13 +133,22 @@ void Game::moveInvaders() {
         rightMostInvader.getPosition().x +
         rightMostInvader.getImages()[rightMostInvader.getType()].width};
     static float positionLeft{m_invaders.at(0).getPosition().x};
-    const static int rightWall {GetScreenWidth() - (GetScreenWidth() / 50)};
-    const static int leftWall {GetScreenWidth() / 50};
-            //Rectangle{GetScreenWidth() / 50, GetScreenHeight() / 50,
-            //      GetScreenWidth() - (GetScreenWidth() / 50 *2),
-            //      GetScreenHeight() - (GetScreenHeight() / 50*2)};
-//
-    if (positionRight > static_cast<float>(rightWall) || positionLeft < static_cast<float>(leftWall)) {
+    const static int rightWall{GetScreenWidth() - (GetScreenWidth() / 50)};
+    const static int leftWall{GetScreenWidth() / 50};
+    // Rectangle{GetScreenWidth() / 50, GetScreenHeight() / 50,
+    //       GetScreenWidth() - (GetScreenWidth() / 50 *2),
+    //       GetScreenHeight() - (GetScreenHeight() / 50*2)};
+    //
+    if (m_wasReset) {
+        rightMostInvader = m_invaders.back();
+        positionRight =
+            rightMostInvader.getPosition().x +
+            rightMostInvader.getImages()[rightMostInvader.getType()].width;
+        positionLeft = m_invaders.at(0).getPosition().x;
+        m_wasReset   = false;
+    }
+    if (positionRight > static_cast<float>(rightWall) ||
+        positionLeft < static_cast<float>(leftWall)) {
         speed = -speed;
         y     = 2;
     }
@@ -149,12 +160,13 @@ void Game::moveInvaders() {
     }
 }
 void Game::drawHealth() {
-    //const static Texture2D healthTx{LoadTexture("../assets/heart.png")};
+    // const static Texture2D healthTx{LoadTexture("../assets/heart.png")};
     Vector2 size{GetScreenWidth() / 32, GetScreenHeight() / 60};
     for (int i{0}; i < m_health; ++i) {
-        DrawRectangleV(Vector2{(i * ((size.x) + (0.4f * size.x)) + GetScreenWidth()/16),
-                               (GetScreenHeight()- GetScreenHeight()/50 -5) - size.y},
-                       size, RED);
+        DrawRectangleV(
+            Vector2{(i * ((size.x) + (0.4f * size.x)) + GetScreenWidth() / 16),
+                    (GetScreenHeight() - GetScreenHeight() / 50 - 5) - size.y},
+            size, RED);
     }
     // DrawTextureV(
     //     healthTx,
