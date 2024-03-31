@@ -3,7 +3,7 @@ project(${PROJECT_NAME})
 add_library(Game Game.cpp)
 target_include_directories(Game PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../include)
 target_link_libraries(
-    Game PUBLIC raylib PUBLIC Spaceship PUBLIC Laser PUBLIC Invader PUBLIC Shield PUBLIC Block PUBLIC Cover PUBLIC Fleet)
+    Game PUBLIC raylib PUBLIC Spaceship PUBLIC Laser PUBLIC Invader PUBLIC Shield PUBLIC Block PUBLIC Cover)
 
 add_library(test test.cpp)
 target_include_directories(test PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../include)
@@ -32,6 +32,6 @@ add_library(Cover Cover.cpp)
 target_include_directories(Cover PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../include)
 target_link_libraries(Cover PUBLIC raylib PUBLIC Shield PUBLIC Laser)
 
-add_library(Fleet Fleet.cpp)
-target_include_directories(Fleet PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../include)
-target_link_libraries(Fleet PUBLIC raylib PUBLIC Invader PUBLIC Laser)
+#add_library(Fleet Fleet.cpp)
+#target_include_directories(Fleet PUBLIC ${CMAKE_CURRENT_LIST_DIR}/../include)
+#target_link_libraries(Fleet PUBLIC raylib PUBLIC Invader PUBLIC Laser)

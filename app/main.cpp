@@ -9,8 +9,8 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Space Invaders");
     SetTargetFPS(60);
 
-    Game game;
-
+    Game game{};
+    game.createInvaders();
 
     while (!WindowShouldClose()) {
 

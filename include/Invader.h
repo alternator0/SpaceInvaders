@@ -1,25 +1,29 @@
 #pragma once
 #include <string>
+#include <string_view>
 #include <vector>
 #include "Laser.h"
 #include "raylib.h"
-#include <string_view>
 class Invader {
-    Texture2D m_image{LoadTexture("../assets/titles.png")};
-    Vector2 m_position{};
+public:
+    enum AlienType { alien1, alien2, alien3, max_alien_types };
+
+private:
+    static Texture2D m_images[3];
+    
     std::vector<Laser> m_lasers{};
     bool m_isActive{true};
+    AlienType m_type{};
 
 public:
-    Invader(float x, float y);
+Vector2 m_position{};
+    Invader(float x, float y, AlienType type);
     ~Invader();
-    void setImage(Texture2D&& x);
-    void setImage(std::string_view x);
-    Texture2D getImage()const {return m_image;}
-    void shoot();
-    void getHit(Laser& laser);
+    //void shoot();
+    //void getHit(std::vector<Laser>& lasers);
     bool isActive() const { return m_isActive; }
     std::vector<Laser>& lasers() { return m_lasers; }
     void draw();
-    void update(Laser& laser);
+    void update(std::vector<Laser>& lasers);
+    static void unloadImages();
 };

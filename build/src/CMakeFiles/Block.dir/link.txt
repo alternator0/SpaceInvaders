@@ -1,0 +1,2 @@
+C:\mingw64\bin\ar.exe qc libBlock.a CMakeFiles/Block.dir/Block.cpp.obj
+C:\mingw64\bin\ranlib.exe libBlock.a

@@ -5,19 +5,22 @@
 #include "Spaceship.h"
 #include "raylib.h"
 #include "Cover.h"
-#include "Fleet.h"
+#include "Invader.h"
 
 class Game {
     Spaceship m_player{};
-    //Invader m_invader{100,100,LoadTexture("../assets/alien_1.png")};
-    Fleet<5> m_fleet{100, LoadImage("../assets/alien_1.png")};
+    std::vector<Invader> m_invaders{};
+    //Invader m_invader{100,100,Invader::alien3};
+    Rectangle m_legion{};
     Cover<4,3.0f> m_cover{};
 
 public:
     Game() = default;
+    ~Game();
     void updateLasers();
     void deleteInactiveLasers();
     void deleteInactiveInvaders();
     void update();
     void draw();
+    void createInvaders();
 };
